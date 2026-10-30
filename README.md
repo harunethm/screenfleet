@@ -9,7 +9,8 @@ Windows, and later macOS. Fully open source, no third-party apps.
 | [`host-windows/`](host-windows/README.md) | Windows host (C++): capture → GPU encode → stream | working (video, extend + mirror) |
 | [`driver/`](driver/README.md) | Virtual monitor driver (C++, IddCx), self-signed | working |
 | [`android/`](android/README.md) | Android app (Java, minSdk 19) | working (display) |
-| [`host-mac/`](host-mac/README.md) | macOS host | later |
+| [`host-mac/`](host-mac/README.md) | macOS host | not started, contributions welcome |
+| [`ios/`](ios/README.md) | iOS / iPadOS app | not started, contributions welcome |
 | `installer/` | Windows installer (Inno Setup): app + driver | 1.0.0 |
 
 ## Install (Windows)
