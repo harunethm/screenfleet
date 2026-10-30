@@ -1,0 +1,51 @@
+# Build outputs
+build/
+build-*/
+out/
+dist/
+bin/
+obj/
+x64/
+ARM64/
+Debug/
+Release/
+*.obj
+*.pdb
+*.ilk
+*.exe
+*.dll
+*.sys
+*.cat
+
+# Visual Studio / CMake
+.vs/
+*.user
+CMakeUserPresets.json
+
+# Android / Gradle
+.gradle/
+local.properties
+*.apk
+*.aab
+captures/
+.cxx/
+.externalNativeBuild/
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+
+# Signing material (never commit)
+*.pfx
+*.pvk
+*.p12
+*.keystore
+*.jks
+
+# OS
+Thumbs.db
+.DS_Store
+
+# design tool working files
+.taste-skill/

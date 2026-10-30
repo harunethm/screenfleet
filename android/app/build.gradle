@@ -1,0 +1,56 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'app.screenfleet'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'app.screenfleet'
+        // Android 4.4 KitKat. No AndroidX/support libraries: framework APIs only.
+        minSdk 19
+        targetSdk 35
+        versionCode 1
+        versionName '1.0.0'
+    }
+
+    // Release key: kept outside the repo. local.properties (not committed) names
+    // a properties file with SST_RELEASE_STORE_FILE (relative to that file),
+    // _STORE_PASSWORD and _KEY_ALIAS:  sst.signing=E\:/path/to/gradle.properties
+    // Without it the release APK comes out unsigned.
+    def signing = new Properties()
+    File signingFile = null
+    def local = rootProject.file('local.properties')
+    if (local.exists()) {
+        def localProps = new Properties()
+        local.withInputStream { localProps.load(it) }
+        def path = localProps.getProperty('sst.signing')
+        if (path) {
+            signingFile = file(path)
+            signingFile.withInputStream { signing.load(it) }
+        }
+    }
+    signingConfigs {
+        release {
+            if (signing.getProperty('SST_RELEASE_STORE_FILE')) {
+                storeFile new File(signingFile.parentFile, signing.getProperty('SST_RELEASE_STORE_FILE'))
+                storePassword signing.getProperty('SST_RELEASE_STORE_PASSWORD')
+                keyAlias signing.getProperty('SST_RELEASE_KEY_ALIAS')
+                keyPassword signing.getProperty('SST_RELEASE_STORE_PASSWORD')
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            if (signing.getProperty('SST_RELEASE_STORE_FILE')) signingConfig signingConfigs.release
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+}

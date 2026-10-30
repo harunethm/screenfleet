@@ -1,0 +1,69 @@
+;
+; SstDisplay.inf - ScreenFleet virtual display driver (IddCx, UMDF)
+;
+
+[Version]
+PnpLockDown=1
+Signature="$Windows NT$"
+ClassGUID={4D36E968-E325-11CE-BFC1-08002BE10318}
+Class=Display
+ClassVer=2.0
+Provider=%ManufacturerName%
+CatalogFile=SstDisplay.cat
+DriverVer=
+
+[Manufacturer]
+%ManufacturerName%=Standard,NT$ARCH$.10.0...19041
+
+[Standard.NT$ARCH$.10.0...19041]
+%DeviceName%=SstDisplay_Install, Root\SstDisplay
+
+[SourceDisksFiles]
+SstDisplay.dll=1
+
+[SourceDisksNames]
+1=%DiskName%
+
+[SstDisplay_Install.NT]
+Include=WUDFRD.inf
+Needs=WUDFRD.NT
+CopyFiles=UMDriverCopy
+
+[SstDisplay_Install.NT.hw]
+Include=WUDFRD.inf
+Needs=WUDFRD.NT.HW
+AddReg=SstDisplay_HardwareDeviceSettings
+
+[SstDisplay_HardwareDeviceSettings]
+HKR,,"UpperFilters",%REG_MULTI_SZ%,"IndirectKmd"
+HKR,"WUDF","DeviceGroupId",%REG_SZ%,"SstDisplayGroup"
+; Who may open the device: SYSTEM and Administrators fully, the signed-in
+; (interactive) user read/write so sst-host.exe works without admin rights.
+HKR,,Security,,"D:P(A;;GA;;;SY)(A;;GA;;;BA)(A;;GRGW;;;IU)"
+
+[SstDisplay_Install.NT.Services]
+Include=WUDFRD.inf
+Needs=WUDFRD.NT.Services
+
+[SstDisplay_Install.NT.Wdf]
+UmdfService=SstDisplay,SstDisplay_UmdfInstall
+UmdfServiceOrder=SstDisplay
+UmdfKernelModeClientPolicy=AllowKernelModeClients
+
+[SstDisplay_UmdfInstall]
+UmdfLibraryVersion=$UMDFVERSION$
+ServiceBinary=%13%\SstDisplay.dll
+UmdfExtensions=IddCx0102
+
+[DestinationDirs]
+UMDriverCopy=13
+
+[UMDriverCopy]
+SstDisplay.dll
+
+[Strings]
+ManufacturerName="ScreenFleet"
+DiskName="ScreenFleet Display Driver"
+DeviceName="ScreenFleet Virtual Display"
+REG_MULTI_SZ=0x00010000
+REG_SZ=0x00000000
