@@ -30,10 +30,6 @@ latency every 5 seconds).
 | `Protocol.java` | wire protocol (see `protocol/PROTOCOL.md`) |
 | `TouchInput.java` | touches and pen on the picture → InputEvent snapshots for the PC |
 
-## Not done yet
-
-App icon.
-
 ## Touch and pen
 
 Fingers and the pen on the picture are sent to the PC (setting "Touch
